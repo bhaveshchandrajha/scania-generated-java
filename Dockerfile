@@ -7,9 +7,9 @@ WORKDIR /app
 COPY pom.xml .
 RUN mvn dependency:go-offline -B
 
-# 2. Copy the source code, Angular UI (Maven expects ../warranty-ui from /app), and build
+# 2. Copy the source code, Angular UI (same layout as repo: /app/warranty-ui), and build
 COPY src ./src
-COPY warranty-ui /warranty-ui
+COPY warranty-ui ./warranty-ui
 RUN mvn clean package -DskipTests
 
 # --- Stage 2: Runtime Stage ---
@@ -21,7 +21,9 @@ WORKDIR /app
 # Based on your pom.xml: <artifactId>warranty-claim-management</artifactId> and <version>1.0.0</version>
 COPY --from=build /app/target/warranty-claim-management-1.0.0.jar app.jar
 
-# 4. Expose the default Spring Boot port
+# 4. Listen on 8080 inside the container (matches EXPOSE and -p 80:8080 in deploy).
+#    application.properties uses 8081 for local runs; SERVER_PORT overrides the JAR.
+ENV SERVER_PORT=8080
 EXPOSE 8080
 
 # 5. Run the application
