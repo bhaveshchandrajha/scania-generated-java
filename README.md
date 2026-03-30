@@ -14,7 +14,7 @@ mvn -q -DskipTests package
 mvn spring-boot:run
 ```
 
-Default port: **8081** (see `src/main/resources/application.properties`).
+Listens on **all interfaces** (`server.address=0.0.0.0`), default port **8081** (see `src/main/resources/application.properties`).
 
 ## Configuration
 

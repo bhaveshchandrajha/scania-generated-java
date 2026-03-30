@@ -1,16 +1,8 @@
 
 # Maven
 target/
-pom.xml.tag
-pom.xml.releaseBackup
-release.properties
 
-# IDE
-.idea/
-*.iml
-.vscode/
-
-# Local H2 data files
 data/
 *.mv.db
 *.trace.db
+
