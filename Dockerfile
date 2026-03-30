@@ -7,8 +7,9 @@ WORKDIR /app
 COPY pom.xml .
 RUN mvn dependency:go-offline -B
 
-# 2. Copy the source code and build the application
+# 2. Copy the source code, Angular UI (Maven expects ../warranty-ui from /app), and build
 COPY src ./src
+COPY warranty-ui /warranty-ui
 RUN mvn clean package -DskipTests
 
 # --- Stage 2: Runtime Stage ---
