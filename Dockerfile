@@ -27,4 +27,4 @@ ENV SERVER_PORT=8080
 EXPOSE 8080
 
 # 5. Run the application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar", "--spring.h2.console.settings.web-allow-others=true"]
