@@ -6,23 +6,21 @@
 
 package com.scania.warranty.dto;
 
+import java.math.BigDecimal;
+
 public record ClaimListItemDto(
-    String companyCode,
-    String invoiceNr,
-    String invoiceDate,
-    String customerNr,
-    String claimType,
+    String kzl,
+    String rechNr,
+    String rechDatum,
     String claimNr,
-    String chassisNr,
-    String registrationNr,
-    String repairDate,
-    String mileage,
-    String customerCode,
-    String customerName,
-    String sdeClaimNr,
-    int statusCode,
-    String statusText,
-    String demandCode,
-    String colorIndicator,
-    int errorCount
+    String art,
+    String datauf,
+    String claimCode,
+    String claimDescription,
+    String status,
+    String dmcCode,
+    int errorCount,
+    String color,
+    BigDecimal claimNumber,
+    String fgnr
 ) {} // @rpg-trace: n471

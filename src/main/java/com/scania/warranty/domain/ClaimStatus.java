@@ -7,25 +7,26 @@
 package com.scania.warranty.domain;
 
 public enum ClaimStatus {
-    PENDING(0),
-    MINIMUM(5),
-    REJECTED(11),
-    APPROVED(20),
-    EXCLUDED(99);
+    PENDING("00"),
+    MINIMUM("05"),
+    REJECTED("11"),
+    APPROVED("20"),
+    EXCLUDED("99");
 
-    private final int code;
+    private final String code;
 
-    ClaimStatus(int code) {
+    ClaimStatus(String code) {
         this.code = code;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public static ClaimStatus fromCode(int code) {
+    public static ClaimStatus fromCode(String code) {
+        if (code == null) return PENDING;
         for (ClaimStatus s : values()) {
-            if (s.code == code) return s;
+            if (s.code.equals(code.trim())) return s;
         }
         return PENDING;
     }

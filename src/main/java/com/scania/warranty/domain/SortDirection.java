@@ -7,6 +7,16 @@
 package com.scania.warranty.domain;
 
 public enum SortDirection {
-    ASCENDING,
-    DESCENDING
+    ASCENDING("Auf"),
+    DESCENDING("Ab");
+
+    private final String label;
+
+    SortDirection(String label) {
+        this.label = label;
+    }
+
+    public String getLabel() {
+        return label;
+    }
 }

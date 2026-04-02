@@ -9,7 +9,7 @@ package com.scania.warranty.dto;
 import java.util.List;
 
 public record CheckClaimResultDto(
-    boolean valid,
-    List<String> errors,
-    String updatedG73360
-) {}
+    boolean hasErrors,
+    int errorCount,
+    List<ClaimValidationErrorDto> errors
+) {} // @rpg-trace: n1919

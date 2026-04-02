@@ -29,6 +29,37 @@ public class LaborId implements Serializable {
 
     public LaborId() {}
 
+    public String getAhw000() { return ahw000; }
+    public void setAhw000(String v) { this.ahw000 = v; }
+    public String getAhw010() { return ahw010; }
+    public void setAhw010(String v) { this.ahw010 = v; }
+    public String getAhw020() { return ahw020; }
+    public void setAhw020(String v) { this.ahw020 = v; }
+    public String getAhw030() { return ahw030; }
+    public void setAhw030(String v) { this.ahw030 = v; }
+    public String getAhw040() { return ahw040; }
+    public void setAhw040(String v) { this.ahw040 = v; }
+    public String getAhw050() { return ahw050; }
+    public void setAhw050(String v) { this.ahw050 = v; }
+    public String getAhw060() { return ahw060; }
+    public void setAhw060(String v) { this.ahw060 = v; }
+    public String getAhw070() { return ahw070; }
+    public void setAhw070(String v) { this.ahw070 = v; }
+    public String getAhw080() { return ahw080; }
+    public void setAhw080(String v) { this.ahw080 = v; }
+    public BigDecimal getAhw085() { return ahw085; }
+    public void setAhw085(BigDecimal v) { this.ahw085 = v; }
+    public String getAhw090() { return ahw090; }
+    public void setAhw090(String v) { this.ahw090 = v; }
+    public BigDecimal getAhw093() { return ahw093; }
+    public void setAhw093(BigDecimal v) { this.ahw093 = v; }
+    public BigDecimal getAhw095() { return ahw095; }
+    public void setAhw095(BigDecimal v) { this.ahw095 = v; }
+    public String getAhw100() { return ahw100; }
+    public void setAhw100(String v) { this.ahw100 = v; }
+    public String getAhw110() { return ahw110; }
+    public void setAhw110(String v) { this.ahw110 = v; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

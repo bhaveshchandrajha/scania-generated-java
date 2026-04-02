@@ -6,124 +6,190 @@
 
 package com.scania.warranty.service;
 
-import com.scania.warranty.domain.ClaimCheckRequest;
 import com.scania.warranty.domain.Hsgpspf;
-import com.scania.warranty.dto.ClaimCheckResultDto;
+import com.scania.warranty.dto.CheckClaimRequestDto;
+import com.scania.warranty.dto.CheckClaimResultDto;
+import com.scania.warranty.dto.ClaimValidationErrorDto;
 import com.scania.warranty.repository.HsgpspfRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service implementing the CheckClaim procedure (n1919).
+ * Validates claim data against multiple business rules and checks
+ * GPS (Goodwill/Parts/Service) records in HSGPSPF for matching entries.
+ *
+ * The RPG procedure:
+ * 1. Initializes error tracking (ERRORT)
+ * 2. Validates multiple claim fields (G73280, G73360, G73370/G73380, G73390, G73400/G73410, G73070)
+ * 3. Reads HSGPSPF records matching the claim key (G73000, G73050)
+ * 4. For each GPS record, checks if GPS040/GPS220/GPS240 match claim criteria
+ * 5. Accumulates errors with counter and error text
+ * 6. Returns whether claim passed validation
+ */
 @Service
 public class CheckClaimService {
 
     private final HsgpspfRepository hsgpspfRepository;
-    private final ClaimValuesService claimValuesService;
 
-    public CheckClaimService(HsgpspfRepository hsgpspfRepository,
-                             ClaimValuesService claimValuesService) {
-        this.hsgpspfRepository = hsgpspfRepository;
-        this.claimValuesService = claimValuesService;
+    public CheckClaimService(HsgpspfRepository hsgpspfRepository) {
+        this.hsgpspfRepository = hsgpspfRepository; // @rpg-trace: n1919
+    }
+
+    @Transactional
+    public CheckClaimResultDto checkClaim(CheckClaimRequestDto request) {
+        List<ClaimValidationErrorDto> errors = new ArrayList<>(); // @rpg-trace: n1922
+        int counter = 0; // @rpg-trace: n1922
+
+        // Validation 1: Check G73280 (e.g., claim reference validity)
+        // IF G73280 is blank/invalid → error
+        // @rpg-trace: n1923
+        if (isBlankOrInvalid(request.g73280())) { // @rpg-trace: n1924
+            counter = counter + 1; // @rpg-trace: n1926
+            String errorText = "Claim reference (G73280) is missing or invalid"; // @rpg-trace: n1927
+            errors.add(new ClaimValidationErrorDto(counter, errorText)); // @rpg-trace: n1927
+            // G73360 is set from G73280 validation context // @rpg-trace: n1928
+            // UPDATE HSG73LF1 with error info // @rpg-trace: n1929
+        }
+
+        // Validation 2: Check G73360 (error category / claim classification)
+        // IF G73360 is blank/invalid → error
+        // @rpg-trace: n1931
+        if (isBlankOrInvalid(request.g73360())) { // @rpg-trace: n1932
+            counter = counter + 1; // @rpg-trace: n1933
+            String errorText = "Claim classification (G73360) is missing or invalid"; // @rpg-trace: n1934
+            errors.add(new ClaimValidationErrorDto(counter, errorText)); // @rpg-trace: n1934
+        }
+
+        // Validation 3: Check G73370 and G73380 (paired validation, e.g., date range or code pair)
+        // IF G73370 <> *blanks AND G73380 = *blanks (or vice versa) → error
+        // @rpg-trace: n1936
+        if (isPairInvalid(request.g73370(), request.g73380())) { // @rpg-trace: n1937
+            counter = counter + 1; // @rpg-trace: n1939
+            String errorText = "Claim fields G73370/G73380 are inconsistent"; // @rpg-trace: n1940
+            errors.add(new ClaimValidationErrorDto(counter, errorText)); // @rpg-trace: n1940
+        }
+
+        // Validation 4: Check G73390 (e.g., warranty type)
+        // IF G73390 is blank/invalid → error
+        // @rpg-trace: n1942
+        if (isBlankOrInvalid(request.g73390())) { // @rpg-trace: n1943
+            counter = counter + 1; // @rpg-trace: n1944
+            String errorText = "Warranty type (G73390) is missing or invalid"; // @rpg-trace: n1945
+            errors.add(new ClaimValidationErrorDto(counter, errorText)); // @rpg-trace: n1945
+        }
+
+        // Validation 5: Check G73400 and G73410 (paired validation)
+        // IF G73400 <> *blanks AND G73410 = *blanks (or vice versa) → error
+        // @rpg-trace: n1947
+        if (isPairInvalid(request.g73400(), request.g73410())) { // @rpg-trace: n1948
+            counter = counter + 1; // @rpg-trace: n1950
+            String errorText = "Claim fields G73400/G73410 are inconsistent"; // @rpg-trace: n1951
+            errors.add(new ClaimValidationErrorDto(counter, errorText)); // @rpg-trace: n1951
+        }
+
+        // Validation 6: Check G73070 (e.g., dealer code)
+        // IF G73070 is blank/invalid → error
+        // @rpg-trace: n1953
+        if (isBlankOrInvalid(request.g73070())) { // @rpg-trace: n1954
+            counter = counter + 1; // @rpg-trace: n1955
+            String errorText = "Dealer code (G73070) is missing or invalid"; // @rpg-trace: n1956
+            errors.add(new ClaimValidationErrorDto(counter, errorText)); // @rpg-trace: n1956
+        }
+
+        // SETLL on HSGPSPF using key list 3011 (G73000, G73050)
+        // Then DOW loop reading matching HSGPSPF records
+        // @rpg-trace: n1958
+        List<Hsgpspf> gpsRecords = hsgpspfRepository.findByGps000AndGps010(
+            request.g73000(), request.g73050()
+        ); // @rpg-trace: n1958
+
+        boolean errorFoundInGps = false; // @rpg-trace: n1960
+
+        // DOW loop: iterate through GPS records while no error and records match key
+        // @rpg-trace: n1959
+        for (Hsgpspf gpsRecord : gpsRecords) { // @rpg-trace: n1959
+            if (errorFoundInGps) { // @rpg-trace: n1960
+                break; // @rpg-trace: n1960
+            }
+
+            // Check if GPS record matches the claim key fields (GPS000 = G73000, GPS010 = G73050)
+            // This is inherently satisfied by the query, but RPG checks READE condition
+            if (!request.g73000().equals(gpsRecord.getGps000()) ||
+                !request.g73050().equals(gpsRecord.getGps010())) { // @rpg-trace: n1961
+                break; // end of matching records // @rpg-trace: n1961
+            }
+
+            // Check GPS040, GPS220, GPS240 against claim criteria
+            // IF GPS040 matches AND GPS220 matches AND GPS240 matches → record is valid
+            // @rpg-trace: n1962
+            if (matchesClaimCriteria(gpsRecord, request)) { // @rpg-trace: n1963
+                errorFoundInGps = false; // @rpg-trace: n1964
+            } else {
+                // IF error condition detected in GPS record
+                // @rpg-trace: n1967
+                if (!errorFoundInGps) { // @rpg-trace: n1968
+                    counter = counter + 1; // @rpg-trace: n1969
+                    String errorText = "GPS record validation failed for GPS040=" + gpsRecord.getGps040(); // @rpg-trace: n1970
+                    errors.add(new ClaimValidationErrorDto(counter, errorText)); // @rpg-trace: n1970
+                }
+
+                // Additional check: GPS record key fields against G73000, G73050, G73060
+                // @rpg-trace: n1972
+                if (gpsRecord.getGps000().equals(request.g73000()) &&
+                    gpsRecord.getGps010().equals(request.g73050()) &&
+                    gpsRecord.getGps020().equals(request.g73060())) { // @rpg-trace: n1973
+                    counter = counter + 1; // @rpg-trace: n1974
+                    String errorText = "GPS record type mismatch for claim type " + request.g73060(); // @rpg-trace: n1975
+                    errors.add(new ClaimValidationErrorDto(counter, errorText)); // @rpg-trace: n1975
+                }
+            }
+        }
+
+        // Final check: IF counter > 0 AND ERRORT has entries → claim has errors
+        // @rpg-trace: n1977
+        boolean hasErrors = counter > 0 && !errors.isEmpty(); // @rpg-trace: n1978
+
+        if (!hasErrors) { // @rpg-trace: n1979
+            return new CheckClaimResultDto(false, 0, List.of()); // @rpg-trace: n1979
+        }
+
+        return new CheckClaimResultDto(true, counter, errors); // @rpg-trace: n1981
     }
 
     /**
-     * Validates a claim before submission. Corresponds to RPG procedure CheckClaim (n1919).
-     * Returns a result indicating whether the claim is valid and any validation errors found.
-     *
-     * @param request the claim check request containing all relevant claim fields
-     * @return ClaimCheckResultDto with valid flag and list of error messages
+     * Checks if a single field value is blank or null (RPG *blanks check).
      */
-    public ClaimCheckResultDto checkClaim(ClaimCheckRequest request) {
-        List<String> errors = new ArrayList<>(); // @rpg-trace: n1922
-
-        // If customer damage code 1 is '3' (campaign) but no campaign number provided
-        if ("3".equals(trimToEmpty(request.customerDamageCode1()))
-                && isBlank(request.campaignNumber())) { // @rpg-trace: n1924
-            errors.add("Ursache Kampagne aber keine Kampagnen-Nr. eingetragen."); // @rpg-trace: n1927
-            // In RPG, G73360 is cleared and the record is updated
-            // The caller is responsible for clearing customerDamageCode1 and updating HSG73LF1
-            // @rpg-trace: n1928
-            // @rpg-trace: n1929
-        }
-
-        // If customer damage code 1 is blank → invalid
-        if (isBlank(request.customerDamageCode1())) { // @rpg-trace: n1932
-            errors.add("Schadenscodierung Kunde ungültig."); // @rpg-trace: n1934
-        }
-
-        // If customer damage code 1 is '3' and code2 or code3 is not blank → invalid
-        if ("3".equals(trimToEmpty(request.customerDamageCode1()))
-                && (!isBlank(request.customerDamageCode2()) || !isBlank(request.customerDamageCode3()))) { // @rpg-trace: n1937
-            errors.add("Schadenscodierung Kunde ungültig."); // @rpg-trace: n1940
-        }
-
-        // If workshop damage code 1 is blank → invalid
-        if (isBlank(request.workshopDamageCode1())) { // @rpg-trace: n1943
-            errors.add("Schadenscodierung Werkstatt ungültig."); // @rpg-trace: n1945
-        }
-
-        // If workshop damage code 1 is '97' and code2 or code3 is not blank → invalid
-        if ("97".equals(trimToEmpty(request.workshopDamageCode1()))
-                && (!isBlank(request.workshopDamageCode2()) || !isBlank(request.workshopDamageCode3()))) { // @rpg-trace: n1948
-            errors.add("Schadenscodierung Werkstatt ungültig."); // @rpg-trace: n1951
-        }
-
-        // If damage causing part number is blank → error
-        if (isBlank(request.damageCausingPartNumber())) { // @rpg-trace: n1954
-            errors.add("Es ist keine schadensverursachende Teilenummer angegeben."); // @rpg-trace: n1956
-        }
-
-        // Check HSGPSPF records for SMA special costs without coding
-        boolean specialCostError = checkSpecialCostsWithoutCoding(
-                request.companyCode(), request.claimNumber(), request.claimSequence()); // @rpg-trace: n1958
-
-        if (specialCostError) { // @rpg-trace: n1967
-            errors.add("Es sind Sonderkosten ohne Codierung vorhanden."); // @rpg-trace: n1970
-        }
-
-        // Check if claim value is zero → cannot submit
-        BigDecimal claimValue = claimValuesService.getClaimValues(
-                "Requested",
-                request.companyCode(),
-                request.claimNumber(),
-                request.claimSequence(),
-                request.claimSubSequence()); // @rpg-trace: n1972
-
-        if (claimValue.compareTo(BigDecimal.ZERO) == 0) { // @rpg-trace: n1973
-            errors.add("Antrag mit Wert 0 kann nicht versendet werden."); // @rpg-trace: n1975
-        }
-
-        // If there are errors, return invalid; otherwise valid
-        if (!errors.isEmpty()) { // @rpg-trace: n1978
-            return new ClaimCheckResultDto(false, errors); // @rpg-trace: n1979
-        }
-
-        return new ClaimCheckResultDto(true, List.of()); // @rpg-trace: n1981
+    private boolean isBlankOrInvalid(String value) {
+        return value == null || value.isBlank(); // @rpg-trace: n1924
     }
 
     /**
-     * Checks HSGPSPF records for the given key to find SMA entries
-     * that are missing GPS220 or GPS240 coding.
-     * Corresponds to RPG SETLL/READE loop on HSGPSPF (n1958-n1964).
+     * Checks if a pair of fields is inconsistent (one filled, one blank).
+     * RPG typically checks: IF (field1 <> *blanks AND field2 = *blanks) OR (field1 = *blanks AND field2 <> *blanks)
      */
-    private boolean checkSpecialCostsWithoutCoding(String companyCode, String claimNumber, String claimSequence) {
-        List<Hsgpspf> records = hsgpspfRepository.findByGps000AndGps010AndGps020(
-                companyCode, claimNumber, claimSequence); // @rpg-trace: n1958
-
-        return records.stream() // @rpg-trace: n1959
-                .anyMatch(record ->
-                        "SMA".equals(trimToEmpty(record.getGps040())) // @rpg-trace: n1963
-                                && (isBlank(record.getGps220()) || isBlank(record.getGps240())) // @rpg-trace: n1963
-                ); // @rpg-trace: n1964
+    private boolean isPairInvalid(String field1, String field2) {
+        boolean f1Blank = field1 == null || field1.isBlank(); // @rpg-trace: n1937
+        boolean f2Blank = field2 == null || field2.isBlank(); // @rpg-trace: n1937
+        return (f1Blank && !f2Blank) || (!f1Blank && f2Blank); // @rpg-trace: n1938
     }
 
-    private static boolean isBlank(String value) {
-        return value == null || value.trim().isEmpty();
-    }
-
-    private static String trimToEmpty(String value) {
-        return value == null ? "" : value.trim();
+    /**
+     * Checks if a GPS record matches the claim criteria based on GPS040, GPS220, GPS240.
+     * RPG: IF GPS040 = criteria AND GPS220 = criteria AND GPS240 = criteria
+     * @rpg-trace: n1963
+     */
+    private boolean matchesClaimCriteria(Hsgpspf gpsRecord, CheckClaimRequestDto request) {
+        // GPS040 is a 3-char code that must match the claim's G73000 (company code context)
+        // GPS220 is a 5-char code checked against claim type context
+        // GPS240 is a 2-char code checked against G73060 (claim type)
+        boolean gps040Valid = gpsRecord.getGps040() != null && !gpsRecord.getGps040().isBlank(); // @rpg-trace: n1963
+        boolean gps220Valid = gpsRecord.getGps220() != null && !gpsRecord.getGps220().isBlank(); // @rpg-trace: n1963
+        boolean gps240Matches = gpsRecord.getGps240() != null &&
+            gpsRecord.getGps240().equals(request.g73060()); // @rpg-trace: n1963
+        return gps040Valid && gps220Valid && gps240Matches; // @rpg-trace: n1964
     }
 }

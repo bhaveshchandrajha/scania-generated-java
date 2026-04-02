@@ -18,8 +18,12 @@ import java.util.List;
 @Repository
 public interface LaborRepository extends JpaRepository<Labor, LaborId> {
 
-    @Query("SELECT l FROM Labor l WHERE l.ahw000 = :ahw000 AND l.ahw010 = :ahw010 AND l.ahw020 = :ahw020 AND l.ahw040 = :ahw040 AND l.ahw060 = :ahw060 ORDER BY l.ahw080, l.ahw100, l.ahw110")
-    List<Labor> findByInvoiceKey(@Param("ahw000") String ahw000, @Param("ahw010") String ahw010,
-                                  @Param("ahw020") String ahw020, @Param("ahw040") String ahw040,
-                                  @Param("ahw060") String ahw060); // @rpg-trace: n1213
+    @Query("SELECT l FROM Labor l WHERE l.ahw000 = :kzl AND l.ahw010 = :rechNr " +
+           "AND l.ahw020 = :rechDatum AND l.ahw030 = :art AND l.ahw040 = :claimNr " +
+           "AND l.ahw050 = :neuwt AND l.ahw060 = :neu4 AND l.ahw070 = :splitt " +
+           "ORDER BY l.ahw080, l.ahw085, l.ahw090, l.ahw093, l.ahw095, l.ahw100, l.ahw110")
+    List<Labor> findByKeyAh(@Param("kzl") String kzl, @Param("rechNr") String rechNr,
+                            @Param("rechDatum") String rechDatum, @Param("art") String art,
+                            @Param("claimNr") String claimNr, @Param("neuwt") String neuwt,
+                            @Param("neu4") String neu4, @Param("splitt") String splitt); // @rpg-trace: n1212
 }

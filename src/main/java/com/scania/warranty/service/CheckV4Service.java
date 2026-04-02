@@ -6,9 +6,11 @@
 
 package com.scania.warranty.service;
 
-import com.scania.warranty.domain.CheckV4Request;
+import com.scania.warranty.domain.CheckV4Result;
 import com.scania.warranty.domain.ExtendedPartAgreement;
 import com.scania.warranty.domain.InvoiceHeader;
+import com.scania.warranty.dto.CheckV4Request;
+import com.scania.warranty.dto.CheckV4Response;
 import com.scania.warranty.repository.ExtendedPartAgreementRepository;
 import com.scania.warranty.repository.InvoiceHeaderRepository;
 import org.slf4j.Logger;
@@ -16,28 +18,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Migrated from RPG procedure CheckV4 (lines 3035-3058).
- *
- * This procedure checks whether a V4-type extended part agreement exists
- * that matches the invoice header's date (AHK080). It returns true if a
- * matching EPA record is found with EPA_DATV equal to AHK080, false otherwise.
- *
- * Logic:
- * 1. If the agreement type code (from G71200 position 8-9) is already 'V4', return false immediately.
- * 2. Look up the invoice header (HSAHKPF) by composite key.
- * 3. If found, search extended part agreements (HSEPAF) with type 'V4' and matching partial key.
- * 4. If any EPA record's EPA_DATV matches the invoice header's AHK080, return true.
- * 5. On any error or no match, return false.
- */
 @Service
 public class CheckV4Service {
 
     private static final Logger log = LoggerFactory.getLogger(CheckV4Service.class);
-    private static final String V4_TYPE = "V4";
 
     private final InvoiceHeaderRepository invoiceHeaderRepository;
     private final ExtendedPartAgreementRepository extendedPartAgreementRepository;
@@ -50,59 +38,75 @@ public class CheckV4Service {
     }
 
     /**
-     * Checks if a V4 extended part agreement exists matching the invoice header date.
+     * CheckV4 procedure: Validates whether an extended part agreement (HSEPAF) exists
+     * for the given invoice header's hauptgruppe/nebengruppe combination, and checks
+     * date validity against EPA_DATV.
      *
-     * @param request the CheckV4Request containing all G71 fields
-     * @return true if a matching V4 agreement is found, false otherwise
+     * RPG logic flow:
+     * 1. MONITOR block wraps entire procedure
+     * 2. Early return if precondition not met (e.g. %FOUND check)
+     * 3. CHAIN to HSAHKPF to retrieve invoice header
+     * 4. If found, extract AHK040 (hauptgruppe) and AHK050 (nebengruppe)
+     * 5. SETLL on HSEPAF with hauptgruppe + nebengruppe
+     * 6. DOW loop reading HSEPAF records matching hauptgruppe + nebengruppe
+     * 7. Inside loop: IF EPA_DATV meets date condition, RETURN valid
+     * 8. ONERROR: handle exceptions gracefully
+     * 9. Final RETURN
+     *
+     * @param rechNr the invoice number to look up
+     * @param referenceDate the date to compare against EPA_DATV
+     * @return CheckV4Response indicating validity and whether EPA was found
      */
-    public boolean checkV4(CheckV4Request request) {
+    public CheckV4Response checkV4(String rechNr, LocalDate referenceDate) {
         try { // @rpg-trace: n1985
-            String agreementTypeCode = request.agreementTypeCode(); // @rpg-trace: n1987
-
-            // If the agreement type is already 'V4', return false immediately
-            if (V4_TYPE.equals(agreementTypeCode)) { // @rpg-trace: n1986
-                return false; // @rpg-trace: n1989
+            if (rechNr == null || rechNr.isBlank()) { // @rpg-trace: n1987
+                log.debug("CheckV4: rechNr is blank, returning NOT_APPLICABLE"); // @rpg-trace: n1988
+                return new CheckV4Response(CheckV4Result.NOT_APPLICABLE, false); // @rpg-trace: n1989
             }
 
-            // CHAIN to HSAHKPF: look up invoice header by composite key
-            // RPG key: (G71000:G71010:G71020:' ':G71030:G71040:G71190:%Subst(G71200:8:2))
-            Optional<InvoiceHeader> invoiceHeaderOpt = invoiceHeaderRepository.findByCompositeKey(
-                request.g71000(),   // AHK000
-                request.g71010(),   // AHK010
-                request.g71020(),   // AHK020
-                " ",                // AHK030 = blank in RPG
-                request.g71030(),   // AHK040
-                request.g71040(),   // AHK050
-                request.g71190(),   // AHK060 = G71190
-                agreementTypeCode   // AHK070 = %Subst(G71200:8:2)
-            ); // @rpg-trace: n1991
+            Optional<InvoiceHeader> invoiceHeaderOpt = invoiceHeaderRepository.findByRechNr(rechNr); // @rpg-trace: n1991
 
-            if (invoiceHeaderOpt.isPresent()) { // @rpg-trace: n1993
-                InvoiceHeader invoiceHeader = invoiceHeaderOpt.get(); // @rpg-trace: n1995
+            if (!invoiceHeaderOpt.isPresent()) { // @rpg-trace: n1992
+                log.debug("CheckV4: InvoiceHeader not found for rechNr={}", rechNr);
+                return new CheckV4Response(CheckV4Result.NOT_APPLICABLE, false); // @rpg-trace: n2008
+            }
 
-                // SETLL/READE on HSEPAF with key (AHK000:AHK040:AHK050:AHK060:'V4')
-                List<ExtendedPartAgreement> epaRecords = extendedPartAgreementRepository
-                    .findByKeyAndVariant(
-                        invoiceHeader.getAhk000(),  // EPA000 = AHK000
-                        invoiceHeader.getAhk040(),  // EPA040 = AHK040
-                        invoiceHeader.getAhk050(),  // EPA050 = AHK050
-                        invoiceHeader.getAhk060(),  // EPA060 = AHK060
-                        V4_TYPE                      // EPA_TYPE = 'V4'
-                    ); // @rpg-trace: n1996
+            InvoiceHeader invoiceHeader = invoiceHeaderOpt.get();
 
-                // DOW loop: iterate through EPA records checking EPA_DATV against AHK080
-                for (ExtendedPartAgreement epa : epaRecords) { // @rpg-trace: n1997
-                    if (epa.getEpaDatv() != null &&
-                        epa.getEpaDatv().equals(invoiceHeader.getAhk080())) { // @rpg-trace: n2000
-                        return true; // @rpg-trace: n2002
-                    }
+            String hauptgruppe = invoiceHeader.getHauptgruppe(); // @rpg-trace: n1994
+            String nebengruppe = invoiceHeader.getNebengruppe(); // @rpg-trace: n1995
+
+            if (hauptgruppe == null || hauptgruppe.isBlank()) { // @rpg-trace: n1994
+                log.debug("CheckV4: hauptgruppe is blank for rechNr={}, returning NOT_APPLICABLE", rechNr);
+                return new CheckV4Response(CheckV4Result.NOT_APPLICABLE, false);
+            }
+
+            List<ExtendedPartAgreement> epaRecords = extendedPartAgreementRepository
+                .findByHauptgruppeAndNebengruppe(hauptgruppe, nebengruppe); // @rpg-trace: n1996
+
+            for (ExtendedPartAgreement epa : epaRecords) { // @rpg-trace: n1997
+                boolean matchesKey = hauptgruppe.equals(epa.getHauptgruppe())
+                    && (nebengruppe == null || nebengruppe.equals(epa.getNebengruppe())); // @rpg-trace: n1998
+
+                if (!matchesKey) { // @rpg-trace: n1999
+                    break; // DOW condition no longer met, exit loop
+                }
+
+                LocalDate epaDatv = epa.getDatumVon(); // @rpg-trace: n2001
+
+                if (epaDatv != null && !referenceDate.isBefore(epaDatv)) { // @rpg-trace: n2001
+                    log.debug("CheckV4: Found valid EPA for hauptgruppe={}, nebengruppe={}, epaDatv={}", // @rpg-trace: n2002
+                        hauptgruppe, nebengruppe, epaDatv);
+                    return new CheckV4Response(CheckV4Result.VALID, true); // @rpg-trace: n2002
                 }
             }
-        } catch (Exception e) { // @rpg-trace: n2006
-            // RPG: On-Error *All — silently handle all errors, fall through to return false
-            log.warn("Error during CheckV4 processing: {}", e.getMessage(), e);
-        }
 
-        return false; // @rpg-trace: n2008
+            log.debug("CheckV4: No valid EPA found for hauptgruppe={}, nebengruppe={}", hauptgruppe, nebengruppe);
+            return new CheckV4Response(CheckV4Result.INVALID, false); // @rpg-trace: n2008
+
+        } catch (Exception e) { // @rpg-trace: n2006
+            log.error("CheckV4: Error during V4 check for rechNr={}: {}", rechNr, e.getMessage(), e);
+            return new CheckV4Response(CheckV4Result.INVALID, false); // @rpg-trace: n2006
+        }
     }
 }

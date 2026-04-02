@@ -16,31 +16,31 @@
     {
       "id": "claimNumber",
       "label": "Claim Nr.",
-      "dtoField": "claimNr",
+      "dtoField": "claimNumber",
       "width": 10
     },
     {
       "id": "invoiceNumber",
       "label": "Invoice",
-      "dtoField": "invoiceNr",
+      "dtoField": "invoiceNumber",
       "width": 10
     },
     {
       "id": "formattedInvoiceDate",
       "label": "Invoice Date",
-      "dtoField": "invoiceDate",
+      "dtoField": "formattedInvoiceDate",
       "width": 12
     },
     {
       "id": "chassisNumber",
       "label": "Chassis",
-      "dtoField": "chassisNr",
+      "dtoField": "chassisNumber",
       "width": 12
     },
     {
       "id": "customerNumber",
       "label": "Customer Nr.",
-      "dtoField": "customerCode",
+      "dtoField": "customerNumber",
       "width": 10
     },
     {
@@ -52,7 +52,7 @@
     {
       "id": "statusDescription",
       "label": "Status",
-      "dtoField": "statusText",
+      "dtoField": "statusDescription",
       "width": 6
     },
     {
@@ -70,7 +70,7 @@
     {
       "id": "orderNumber",
       "label": "Order Nr.",
-      "dtoField": "customerNr",
+      "dtoField": "orderNumber",
       "width": 10
     },
     {

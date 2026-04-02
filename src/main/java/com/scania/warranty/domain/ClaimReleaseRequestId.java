@@ -22,6 +22,13 @@ public class ClaimReleaseRequestId implements Serializable {
         this.g70Rdat = g70Rdat;
     }
 
+    public String getG70Kzl() { return g70Kzl; }
+    public void setG70Kzl(String v) { this.g70Kzl = v; }
+    public String getG70Rnr() { return g70Rnr; }
+    public void setG70Rnr(String v) { this.g70Rnr = v; }
+    public String getG70Rdat() { return g70Rdat; }
+    public void setG70Rdat(String v) { this.g70Rdat = v; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

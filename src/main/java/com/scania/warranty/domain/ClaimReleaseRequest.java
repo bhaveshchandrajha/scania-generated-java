@@ -47,21 +47,21 @@ public class ClaimReleaseRequest {
     public ClaimReleaseRequest() {}
 
     public String getG70Kzl() { return g70Kzl; }
-    public void setG70Kzl(String g70Kzl) { this.g70Kzl = g70Kzl; }
+    public void setG70Kzl(String v) { this.g70Kzl = v; }
     public String getG70Rnr() { return g70Rnr; }
-    public void setG70Rnr(String g70Rnr) { this.g70Rnr = g70Rnr; }
+    public void setG70Rnr(String v) { this.g70Rnr = v; }
     public String getG70Rdat() { return g70Rdat; }
-    public void setG70Rdat(String g70Rdat) { this.g70Rdat = g70Rdat; }
+    public void setG70Rdat(String v) { this.g70Rdat = v; }
     public String getG70Fgnr() { return g70Fgnr; }
-    public void setG70Fgnr(String g70Fgnr) { this.g70Fgnr = g70Fgnr; }
+    public void setG70Fgnr(String v) { this.g70Fgnr = v; }
     public String getG70Dat() { return g70Dat; }
-    public void setG70Dat(String g70Dat) { this.g70Dat = g70Dat; }
+    public void setG70Dat(String v) { this.g70Dat = v; }
     public String getG70Status() { return g70Status; }
-    public void setG70Status(String g70Status) { this.g70Status = g70Status; }
+    public void setG70Status(String v) { this.g70Status = v; }
     public BigDecimal getG70Cusno() { return g70Cusno; }
-    public void setG70Cusno(BigDecimal g70Cusno) { this.g70Cusno = g70Cusno; }
+    public void setG70Cusno(BigDecimal v) { this.g70Cusno = v; }
     public BigDecimal getG70Clmno() { return g70Clmno; }
-    public void setG70Clmno(BigDecimal g70Clmno) { this.g70Clmno = g70Clmno; }
+    public void setG70Clmno(BigDecimal v) { this.g70Clmno = v; }
     public String getG70Clmfl() { return g70Clmfl; }
-    public void setG70Clmfl(String g70Clmfl) { this.g70Clmfl = g70Clmfl; }
+    public void setG70Clmfl(String v) { this.g70Clmfl = v; }
 }

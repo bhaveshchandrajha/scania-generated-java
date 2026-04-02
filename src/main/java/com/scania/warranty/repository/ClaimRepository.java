@@ -13,36 +13,30 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface ClaimRepository extends JpaRepository<Claim, ClaimId> {
 
-    @Query("SELECT c FROM Claim c WHERE c.g71000 = :g71000 AND c.g71170 <> 99 ORDER BY c.g71050 ASC")
-    List<Claim> findActiveClaimsByCompanyAsc(@Param("g71000") String g71000);
+    @Query("SELECT c FROM Claim c WHERE c.g71000 = :kzl AND c.g71050 >= :datauf " +
+           "ORDER BY c.g71050 ASC, c.g71060 ASC")
+    List<Claim> findByKzlAndDateAfter(@Param("kzl") String kzl, @Param("datauf") String datauf); // @rpg-trace: n429
 
-    @Query("SELECT c FROM Claim c WHERE c.g71000 = :g71000 AND c.g71170 <> 99 ORDER BY c.g71050 DESC")
-    List<Claim> findActiveClaimsByCompanyDesc(@Param("g71000") String g71000);
+    @Query("SELECT c FROM Claim c WHERE c.g71000 = :kzl AND c.g71050 <= :datauf " +
+           "ORDER BY c.g71050 DESC, c.g71060 DESC")
+    List<Claim> findByKzlAndDateBefore(@Param("kzl") String kzl, @Param("datauf") String datauf); // @rpg-trace: n433
 
-    @Query("SELECT c FROM Claim c WHERE c.g71000 = :g71000 AND c.g71050 = :g71050")
-    Optional<Claim> findByCompanyAndClaimNr(@Param("g71000") String g71000, @Param("g71050") String g71050);
+    Optional<Claim> findByG71000AndG71050AndG71060(String g71000, String g71050, String g71060); // @rpg-trace: n653
 
-    @Query("SELECT c FROM Claim c WHERE c.g71000 = :g71000 ORDER BY c.g71050 ASC")
-    List<Claim> findAllByCompanyAsc(@Param("g71000") String g71000);
+    @Query("SELECT c FROM Claim c WHERE c.g71000 = :kzl AND c.g71010 = :rechNr " +
+           "AND c.g71020 = :rechDatum AND c.g71030 = :claimNr AND c.g71040 = :art " +
+           "ORDER BY c.g71050, c.g71060")
+    List<Claim> findByKeySub(@Param("kzl") String kzl, @Param("rechNr") String rechNr,
+                             @Param("rechDatum") String rechDatum, @Param("claimNr") String claimNr,
+                             @Param("art") String art); // @rpg-trace: n586
 
-    @Query("SELECT c FROM Claim c WHERE c.g71000 = :g71000 ORDER BY c.g71050 DESC")
-    List<Claim> findAllByCompanyDesc(@Param("g71000") String g71000);
-
-    @Query("SELECT MAX(c.g71050) FROM Claim c WHERE c.g71000 = :g71000")
-    Optional<String> findMaxClaimNrByCompany(@Param("g71000") String g71000);
-
-    @Query("SELECT c FROM Claim c WHERE c.g71000 = :g71000 AND c.g71010 = :g71010 AND c.g71020 = :g71020 AND c.g71030 = :g71030 AND c.g71040 = :g71040")
-    List<Claim> findByInvoiceKey(@Param("g71000") String g71000, @Param("g71010") String g71010,
-                                  @Param("g71020") String g71020, @Param("g71030") String g71030,
-                                  @Param("g71040") String g71040);
-
-    @Query("SELECT c FROM Claim c WHERE c.g71000 = :g71000 AND c.g71010 = :g71010 AND c.g71020 = :g71020 AND c.g71030 = :g71030")
-    List<Claim> findByInvoiceKeyPartial(@Param("g71000") String g71000, @Param("g71010") String g71010,
-                                         @Param("g71020") String g71020, @Param("g71030") String g71030);
+    @Query("SELECT MAX(c.g71080) FROM Claim c WHERE c.g71000 = :kzl")
+    Optional<BigDecimal> findMaxClaimNumber(@Param("kzl") String kzl); // @rpg-trace: n1096
 }

@@ -7,9 +7,11 @@
 package com.scania.warranty.domain;
 
 public enum FilterOption {
-    KULANZ("K"),
-    GARANTIE("G"),
-    OTHER("");
+    NONE(""),
+    BY_STATUS("S"),
+    BY_DEALER("D"),
+    BY_VEHICLE("V"),
+    BY_CLAIM("C");
 
     private final String code;
 
@@ -22,8 +24,10 @@ public enum FilterOption {
     }
 
     public static FilterOption fromCode(String code) {
-        if ("K".equals(code)) return KULANZ;
-        if ("G".equals(code)) return GARANTIE;
-        return OTHER;
+        if (code == null) return NONE;
+        for (FilterOption f : values()) {
+            if (f.code.equals(code.trim())) return f;
+        }
+        return NONE;
     }
 }

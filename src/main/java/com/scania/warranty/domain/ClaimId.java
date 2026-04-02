@@ -22,6 +22,13 @@ public class ClaimId implements Serializable {
         this.g71060 = g71060;
     }
 
+    public String getG71000() { return g71000; }
+    public void setG71000(String v) { this.g71000 = v; }
+    public String getG71050() { return g71050; }
+    public void setG71050(String v) { this.g71050 = v; }
+    public String getG71060() { return g71060; }
+    public void setG71060(String v) { this.g71060 = v; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -6,16 +6,20 @@
 
 package com.scania.warranty.web;
 
-import com.scania.warranty.domain.CheckV4Request;
-import com.scania.warranty.dto.CheckV4RequestDto;
-import com.scania.warranty.dto.CheckV4ResultDto;
+import com.scania.warranty.dto.CheckV4Request;
+import com.scania.warranty.dto.CheckV4Response;
 import com.scania.warranty.service.CheckV4Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/api/claims")
+@RequestMapping("/api/warranty")
 public class CheckV4Controller {
 
     private final CheckV4Service checkV4Service;
@@ -25,23 +29,10 @@ public class CheckV4Controller {
         this.checkV4Service = checkV4Service;
     }
 
-    /**
-     * Checks whether a V4 extended part agreement exists for the given claim fields.
-     */
     @PostMapping("/check-v4")
-    public ResponseEntity<CheckV4ResultDto> checkV4(@RequestBody CheckV4RequestDto requestDto) {
-        CheckV4Request request = new CheckV4Request( // @rpg-trace: n1985
-            requestDto.g71000(),
-            requestDto.g71010(),
-            requestDto.g71020(),
-            requestDto.g71030(),
-            requestDto.g71040(),
-            requestDto.g71190(),
-            requestDto.g71200()
-        );
-
-        boolean result = checkV4Service.checkV4(request); // @rpg-trace: n1985
-
-        return ResponseEntity.ok(new CheckV4ResultDto(result));
+    public ResponseEntity<CheckV4Response> checkV4(@RequestBody CheckV4Request request) {
+        LocalDate refDate = request.referenceDate() != null ? request.referenceDate() : LocalDate.now();
+        CheckV4Response response = checkV4Service.checkV4(request.hauptgruppe(), refDate);
+        return ResponseEntity.ok(response);
     }
 }

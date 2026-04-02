@@ -28,6 +28,19 @@ public class InvoiceId implements Serializable {
         this.ahk080 = ahk080;
     }
 
+    public String getAhk000() { return ahk000; }
+    public void setAhk000(String v) { this.ahk000 = v; }
+    public String getAhk040() { return ahk040; }
+    public void setAhk040(String v) { this.ahk040 = v; }
+    public String getAhk050() { return ahk050; }
+    public void setAhk050(String v) { this.ahk050 = v; }
+    public String getAhk060() { return ahk060; }
+    public void setAhk060(String v) { this.ahk060 = v; }
+    public String getAhk070() { return ahk070; }
+    public void setAhk070(String v) { this.ahk070 = v; }
+    public String getAhk080() { return ahk080; }
+    public void setAhk080(String v) { this.ahk080 = v; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

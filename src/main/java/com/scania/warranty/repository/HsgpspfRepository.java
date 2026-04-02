@@ -18,12 +18,11 @@ import java.util.List;
 @Repository
 public interface HsgpspfRepository extends JpaRepository<Hsgpspf, HsgpspfId> {
 
-    // Translates RPG: SETLL/READE (G73000:G73050:G73060) HSGPSPF
-    // Reads all records matching the partial key (GPS000, GPS010, GPS020)
-    @Query("SELECT h FROM Hsgpspf h WHERE h.gps000 = :gps000 AND h.gps010 = :gps010 AND h.gps020 = :gps020")
-    List<Hsgpspf> findByGps000AndGps010AndGps020(
-            @Param("gps000") String gps000,
-            @Param("gps010") String gps010,
-            @Param("gps020") String gps020
-    ); // @rpg-trace: n1958
+    // SETLL + DOW READE on HSGPSPF by key (GPS000, GPS010) - reads all records matching partial key
+    // @rpg-trace: n1958
+    @Query("SELECT h FROM Hsgpspf h WHERE h.gps000 = :gps000 AND h.gps010 = :gps010 ORDER BY h.gps020, h.gps030, h.gps035, h.gps040")
+    List<Hsgpspf> findByGps000AndGps010(
+        @Param("gps000") String gps000,
+        @Param("gps010") String gps010
+    );
 }

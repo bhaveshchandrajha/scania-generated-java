@@ -425,271 +425,271 @@ public class Invoice {
     public Invoice() {}
 
     public String getAhk000() { return ahk000; }
-    public void setAhk000(String ahk000) { this.ahk000 = ahk000; }
+    public void setAhk000(String v) { this.ahk000 = v; }
     public String getAhk010() { return ahk010; }
-    public void setAhk010(String ahk010) { this.ahk010 = ahk010; }
+    public void setAhk010(String v) { this.ahk010 = v; }
     public String getAhk015() { return ahk015; }
-    public void setAhk015(String ahk015) { this.ahk015 = ahk015; }
+    public void setAhk015(String v) { this.ahk015 = v; }
     public String getAhk020() { return ahk020; }
-    public void setAhk020(String ahk020) { this.ahk020 = ahk020; }
+    public void setAhk020(String v) { this.ahk020 = v; }
     public String getAhk030() { return ahk030; }
-    public void setAhk030(String ahk030) { this.ahk030 = ahk030; }
+    public void setAhk030(String v) { this.ahk030 = v; }
     public String getAhk040() { return ahk040; }
-    public void setAhk040(String ahk040) { this.ahk040 = ahk040; }
+    public void setAhk040(String v) { this.ahk040 = v; }
     public String getAhk050() { return ahk050; }
-    public void setAhk050(String ahk050) { this.ahk050 = ahk050; }
+    public void setAhk050(String v) { this.ahk050 = v; }
     public String getAhk060() { return ahk060; }
-    public void setAhk060(String ahk060) { this.ahk060 = ahk060; }
+    public void setAhk060(String v) { this.ahk060 = v; }
     public String getAhk070() { return ahk070; }
-    public void setAhk070(String ahk070) { this.ahk070 = ahk070; }
+    public void setAhk070(String v) { this.ahk070 = v; }
     public String getAhk080() { return ahk080; }
-    public void setAhk080(String ahk080) { this.ahk080 = ahk080; }
+    public void setAhk080(String v) { this.ahk080 = v; }
     public String getAhk090() { return ahk090; }
-    public void setAhk090(String ahk090) { this.ahk090 = ahk090; }
+    public void setAhk090(String v) { this.ahk090 = v; }
     public String getAhk100() { return ahk100; }
-    public void setAhk100(String ahk100) { this.ahk100 = ahk100; }
+    public void setAhk100(String v) { this.ahk100 = v; }
     public String getAhk105() { return ahk105; }
-    public void setAhk105(String ahk105) { this.ahk105 = ahk105; }
+    public void setAhk105(String v) { this.ahk105 = v; }
     public String getAhk106() { return ahk106; }
-    public void setAhk106(String ahk106) { this.ahk106 = ahk106; }
+    public void setAhk106(String v) { this.ahk106 = v; }
     public String getAhk107() { return ahk107; }
-    public void setAhk107(String ahk107) { this.ahk107 = ahk107; }
+    public void setAhk107(String v) { this.ahk107 = v; }
     public String getAhk108() { return ahk108; }
-    public void setAhk108(String ahk108) { this.ahk108 = ahk108; }
+    public void setAhk108(String v) { this.ahk108 = v; }
     public String getAhk110() { return ahk110; }
-    public void setAhk110(String ahk110) { this.ahk110 = ahk110; }
+    public void setAhk110(String v) { this.ahk110 = v; }
     public String getAhk120() { return ahk120; }
-    public void setAhk120(String ahk120) { this.ahk120 = ahk120; }
+    public void setAhk120(String v) { this.ahk120 = v; }
     public BigDecimal getAhk130() { return ahk130; }
-    public void setAhk130(BigDecimal ahk130) { this.ahk130 = ahk130; }
+    public void setAhk130(BigDecimal v) { this.ahk130 = v; }
     public BigDecimal getAhk140() { return ahk140; }
-    public void setAhk140(BigDecimal ahk140) { this.ahk140 = ahk140; }
+    public void setAhk140(BigDecimal v) { this.ahk140 = v; }
     public String getAhk150() { return ahk150; }
-    public void setAhk150(String ahk150) { this.ahk150 = ahk150; }
+    public void setAhk150(String v) { this.ahk150 = v; }
     public String getAhk160() { return ahk160; }
-    public void setAhk160(String ahk160) { this.ahk160 = ahk160; }
+    public void setAhk160(String v) { this.ahk160 = v; }
     public String getAhk170() { return ahk170; }
-    public void setAhk170(String ahk170) { this.ahk170 = ahk170; }
+    public void setAhk170(String v) { this.ahk170 = v; }
     public String getAhk180() { return ahk180; }
-    public void setAhk180(String ahk180) { this.ahk180 = ahk180; }
+    public void setAhk180(String v) { this.ahk180 = v; }
     public String getAhk190() { return ahk190; }
-    public void setAhk190(String ahk190) { this.ahk190 = ahk190; }
+    public void setAhk190(String v) { this.ahk190 = v; }
     public String getAhk200() { return ahk200; }
-    public void setAhk200(String ahk200) { this.ahk200 = ahk200; }
+    public void setAhk200(String v) { this.ahk200 = v; }
     public String getAhk205() { return ahk205; }
-    public void setAhk205(String ahk205) { this.ahk205 = ahk205; }
+    public void setAhk205(String v) { this.ahk205 = v; }
     public String getAhk210() { return ahk210; }
-    public void setAhk210(String ahk210) { this.ahk210 = ahk210; }
+    public void setAhk210(String v) { this.ahk210 = v; }
     public String getAhk220() { return ahk220; }
-    public void setAhk220(String ahk220) { this.ahk220 = ahk220; }
+    public void setAhk220(String v) { this.ahk220 = v; }
     public String getAhk221() { return ahk221; }
-    public void setAhk221(String ahk221) { this.ahk221 = ahk221; }
+    public void setAhk221(String v) { this.ahk221 = v; }
     public String getAhk222() { return ahk222; }
-    public void setAhk222(String ahk222) { this.ahk222 = ahk222; }
+    public void setAhk222(String v) { this.ahk222 = v; }
     public String getAhk223() { return ahk223; }
-    public void setAhk223(String ahk223) { this.ahk223 = ahk223; }
+    public void setAhk223(String v) { this.ahk223 = v; }
     public String getAhk224() { return ahk224; }
-    public void setAhk224(String ahk224) { this.ahk224 = ahk224; }
+    public void setAhk224(String v) { this.ahk224 = v; }
     public String getAhk225() { return ahk225; }
-    public void setAhk225(String ahk225) { this.ahk225 = ahk225; }
+    public void setAhk225(String v) { this.ahk225 = v; }
     public String getAhk226() { return ahk226; }
-    public void setAhk226(String ahk226) { this.ahk226 = ahk226; }
+    public void setAhk226(String v) { this.ahk226 = v; }
     public String getAhk230() { return ahk230; }
-    public void setAhk230(String ahk230) { this.ahk230 = ahk230; }
+    public void setAhk230(String v) { this.ahk230 = v; }
     public String getAhk240() { return ahk240; }
-    public void setAhk240(String ahk240) { this.ahk240 = ahk240; }
+    public void setAhk240(String v) { this.ahk240 = v; }
     public String getAhk250() { return ahk250; }
-    public void setAhk250(String ahk250) { this.ahk250 = ahk250; }
+    public void setAhk250(String v) { this.ahk250 = v; }
     public String getAhk260() { return ahk260; }
-    public void setAhk260(String ahk260) { this.ahk260 = ahk260; }
+    public void setAhk260(String v) { this.ahk260 = v; }
     public String getAhk270() { return ahk270; }
-    public void setAhk270(String ahk270) { this.ahk270 = ahk270; }
+    public void setAhk270(String v) { this.ahk270 = v; }
     public String getAhk280() { return ahk280; }
-    public void setAhk280(String ahk280) { this.ahk280 = ahk280; }
+    public void setAhk280(String v) { this.ahk280 = v; }
     public String getAhk290() { return ahk290; }
-    public void setAhk290(String ahk290) { this.ahk290 = ahk290; }
+    public void setAhk290(String v) { this.ahk290 = v; }
     public String getAhk300() { return ahk300; }
-    public void setAhk300(String ahk300) { this.ahk300 = ahk300; }
+    public void setAhk300(String v) { this.ahk300 = v; }
     public String getAhk310() { return ahk310; }
-    public void setAhk310(String ahk310) { this.ahk310 = ahk310; }
+    public void setAhk310(String v) { this.ahk310 = v; }
     public String getAhk320() { return ahk320; }
-    public void setAhk320(String ahk320) { this.ahk320 = ahk320; }
+    public void setAhk320(String v) { this.ahk320 = v; }
     public String getAhk325() { return ahk325; }
-    public void setAhk325(String ahk325) { this.ahk325 = ahk325; }
+    public void setAhk325(String v) { this.ahk325 = v; }
     public String getAhk330() { return ahk330; }
-    public void setAhk330(String ahk330) { this.ahk330 = ahk330; }
+    public void setAhk330(String v) { this.ahk330 = v; }
     public String getAhk340() { return ahk340; }
-    public void setAhk340(String ahk340) { this.ahk340 = ahk340; }
+    public void setAhk340(String v) { this.ahk340 = v; }
     public String getAhk350() { return ahk350; }
-    public void setAhk350(String ahk350) { this.ahk350 = ahk350; }
+    public void setAhk350(String v) { this.ahk350 = v; }
     public String getAhk360() { return ahk360; }
-    public void setAhk360(String ahk360) { this.ahk360 = ahk360; }
+    public void setAhk360(String v) { this.ahk360 = v; }
     public String getAhk370() { return ahk370; }
-    public void setAhk370(String ahk370) { this.ahk370 = ahk370; }
+    public void setAhk370(String v) { this.ahk370 = v; }
     public String getAhk380() { return ahk380; }
-    public void setAhk380(String ahk380) { this.ahk380 = ahk380; }
+    public void setAhk380(String v) { this.ahk380 = v; }
     public String getAhk390() { return ahk390; }
-    public void setAhk390(String ahk390) { this.ahk390 = ahk390; }
+    public void setAhk390(String v) { this.ahk390 = v; }
     public String getAhk400() { return ahk400; }
-    public void setAhk400(String ahk400) { this.ahk400 = ahk400; }
+    public void setAhk400(String v) { this.ahk400 = v; }
     public String getAhk410() { return ahk410; }
-    public void setAhk410(String ahk410) { this.ahk410 = ahk410; }
+    public void setAhk410(String v) { this.ahk410 = v; }
     public String getAhk420() { return ahk420; }
-    public void setAhk420(String ahk420) { this.ahk420 = ahk420; }
+    public void setAhk420(String v) { this.ahk420 = v; }
     public String getAhk430() { return ahk430; }
-    public void setAhk430(String ahk430) { this.ahk430 = ahk430; }
+    public void setAhk430(String v) { this.ahk430 = v; }
     public String getAhk440() { return ahk440; }
-    public void setAhk440(String ahk440) { this.ahk440 = ahk440; }
+    public void setAhk440(String v) { this.ahk440 = v; }
     public String getAhk450() { return ahk450; }
-    public void setAhk450(String ahk450) { this.ahk450 = ahk450; }
+    public void setAhk450(String v) { this.ahk450 = v; }
     public String getAhk460() { return ahk460; }
-    public void setAhk460(String ahk460) { this.ahk460 = ahk460; }
+    public void setAhk460(String v) { this.ahk460 = v; }
     public String getAhk470() { return ahk470; }
-    public void setAhk470(String ahk470) { this.ahk470 = ahk470; }
+    public void setAhk470(String v) { this.ahk470 = v; }
     public String getAhk480() { return ahk480; }
-    public void setAhk480(String ahk480) { this.ahk480 = ahk480; }
+    public void setAhk480(String v) { this.ahk480 = v; }
     public String getAhk490() { return ahk490; }
-    public void setAhk490(String ahk490) { this.ahk490 = ahk490; }
+    public void setAhk490(String v) { this.ahk490 = v; }
     public String getAhk500() { return ahk500; }
-    public void setAhk500(String ahk500) { this.ahk500 = ahk500; }
+    public void setAhk500(String v) { this.ahk500 = v; }
     public String getAhk505() { return ahk505; }
-    public void setAhk505(String ahk505) { this.ahk505 = ahk505; }
+    public void setAhk505(String v) { this.ahk505 = v; }
     public String getAhk510() { return ahk510; }
-    public void setAhk510(String ahk510) { this.ahk510 = ahk510; }
+    public void setAhk510(String v) { this.ahk510 = v; }
     public String getAhk520() { return ahk520; }
-    public void setAhk520(String ahk520) { this.ahk520 = ahk520; }
+    public void setAhk520(String v) { this.ahk520 = v; }
     public String getAhk530() { return ahk530; }
-    public void setAhk530(String ahk530) { this.ahk530 = ahk530; }
+    public void setAhk530(String v) { this.ahk530 = v; }
     public String getAhk540() { return ahk540; }
-    public void setAhk540(String ahk540) { this.ahk540 = ahk540; }
+    public void setAhk540(String v) { this.ahk540 = v; }
     public String getAhk550() { return ahk550; }
-    public void setAhk550(String ahk550) { this.ahk550 = ahk550; }
+    public void setAhk550(String v) { this.ahk550 = v; }
     public String getAhk560() { return ahk560; }
-    public void setAhk560(String ahk560) { this.ahk560 = ahk560; }
+    public void setAhk560(String v) { this.ahk560 = v; }
     public String getAhk570() { return ahk570; }
-    public void setAhk570(String ahk570) { this.ahk570 = ahk570; }
+    public void setAhk570(String v) { this.ahk570 = v; }
     public String getAhk580() { return ahk580; }
-    public void setAhk580(String ahk580) { this.ahk580 = ahk580; }
+    public void setAhk580(String v) { this.ahk580 = v; }
     public String getAhk590() { return ahk590; }
-    public void setAhk590(String ahk590) { this.ahk590 = ahk590; }
+    public void setAhk590(String v) { this.ahk590 = v; }
     public String getAhk595() { return ahk595; }
-    public void setAhk595(String ahk595) { this.ahk595 = ahk595; }
+    public void setAhk595(String v) { this.ahk595 = v; }
     public String getAhk600() { return ahk600; }
-    public void setAhk600(String ahk600) { this.ahk600 = ahk600; }
+    public void setAhk600(String v) { this.ahk600 = v; }
     public String getAhk610() { return ahk610; }
-    public void setAhk610(String ahk610) { this.ahk610 = ahk610; }
+    public void setAhk610(String v) { this.ahk610 = v; }
     public String getAhk620() { return ahk620; }
-    public void setAhk620(String ahk620) { this.ahk620 = ahk620; }
+    public void setAhk620(String v) { this.ahk620 = v; }
     public String getAhk625() { return ahk625; }
-    public void setAhk625(String ahk625) { this.ahk625 = ahk625; }
+    public void setAhk625(String v) { this.ahk625 = v; }
     public String getAhk630() { return ahk630; }
-    public void setAhk630(String ahk630) { this.ahk630 = ahk630; }
+    public void setAhk630(String v) { this.ahk630 = v; }
     public String getAhk640() { return ahk640; }
-    public void setAhk640(String ahk640) { this.ahk640 = ahk640; }
+    public void setAhk640(String v) { this.ahk640 = v; }
     public String getAhk650() { return ahk650; }
-    public void setAhk650(String ahk650) { this.ahk650 = ahk650; }
+    public void setAhk650(String v) { this.ahk650 = v; }
     public String getAhk660() { return ahk660; }
-    public void setAhk660(String ahk660) { this.ahk660 = ahk660; }
+    public void setAhk660(String v) { this.ahk660 = v; }
     public String getAhk670() { return ahk670; }
-    public void setAhk670(String ahk670) { this.ahk670 = ahk670; }
+    public void setAhk670(String v) { this.ahk670 = v; }
     public String getAhk680() { return ahk680; }
-    public void setAhk680(String ahk680) { this.ahk680 = ahk680; }
+    public void setAhk680(String v) { this.ahk680 = v; }
     public String getAhk690() { return ahk690; }
-    public void setAhk690(String ahk690) { this.ahk690 = ahk690; }
+    public void setAhk690(String v) { this.ahk690 = v; }
     public String getAhk691() { return ahk691; }
-    public void setAhk691(String ahk691) { this.ahk691 = ahk691; }
+    public void setAhk691(String v) { this.ahk691 = v; }
     public String getAhk699() { return ahk699; }
-    public void setAhk699(String ahk699) { this.ahk699 = ahk699; }
+    public void setAhk699(String v) { this.ahk699 = v; }
     public String getAhk700() { return ahk700; }
-    public void setAhk700(String ahk700) { this.ahk700 = ahk700; }
+    public void setAhk700(String v) { this.ahk700 = v; }
     public BigDecimal getAhk710() { return ahk710; }
-    public void setAhk710(BigDecimal ahk710) { this.ahk710 = ahk710; }
+    public void setAhk710(BigDecimal v) { this.ahk710 = v; }
     public BigDecimal getAhk720() { return ahk720; }
-    public void setAhk720(BigDecimal ahk720) { this.ahk720 = ahk720; }
+    public void setAhk720(BigDecimal v) { this.ahk720 = v; }
     public BigDecimal getAhk730() { return ahk730; }
-    public void setAhk730(BigDecimal ahk730) { this.ahk730 = ahk730; }
+    public void setAhk730(BigDecimal v) { this.ahk730 = v; }
     public BigDecimal getAhk740() { return ahk740; }
-    public void setAhk740(BigDecimal ahk740) { this.ahk740 = ahk740; }
+    public void setAhk740(BigDecimal v) { this.ahk740 = v; }
     public BigDecimal getAhk750() { return ahk750; }
-    public void setAhk750(BigDecimal ahk750) { this.ahk750 = ahk750; }
+    public void setAhk750(BigDecimal v) { this.ahk750 = v; }
     public BigDecimal getAhk760() { return ahk760; }
-    public void setAhk760(BigDecimal ahk760) { this.ahk760 = ahk760; }
+    public void setAhk760(BigDecimal v) { this.ahk760 = v; }
     public String getAhk770() { return ahk770; }
-    public void setAhk770(String ahk770) { this.ahk770 = ahk770; }
+    public void setAhk770(String v) { this.ahk770 = v; }
     public String getAhk775() { return ahk775; }
-    public void setAhk775(String ahk775) { this.ahk775 = ahk775; }
+    public void setAhk775(String v) { this.ahk775 = v; }
     public String getAhk780() { return ahk780; }
-    public void setAhk780(String ahk780) { this.ahk780 = ahk780; }
+    public void setAhk780(String v) { this.ahk780 = v; }
     public BigDecimal getAhk790() { return ahk790; }
-    public void setAhk790(BigDecimal ahk790) { this.ahk790 = ahk790; }
+    public void setAhk790(BigDecimal v) { this.ahk790 = v; }
     public BigDecimal getAhk800() { return ahk800; }
-    public void setAhk800(BigDecimal ahk800) { this.ahk800 = ahk800; }
+    public void setAhk800(BigDecimal v) { this.ahk800 = v; }
     public String getAhk810() { return ahk810; }
-    public void setAhk810(String ahk810) { this.ahk810 = ahk810; }
+    public void setAhk810(String v) { this.ahk810 = v; }
     public BigDecimal getAhk815() { return ahk815; }
-    public void setAhk815(BigDecimal ahk815) { this.ahk815 = ahk815; }
+    public void setAhk815(BigDecimal v) { this.ahk815 = v; }
     public BigDecimal getAhk820() { return ahk820; }
-    public void setAhk820(BigDecimal ahk820) { this.ahk820 = ahk820; }
+    public void setAhk820(BigDecimal v) { this.ahk820 = v; }
     public BigDecimal getAhk830() { return ahk830; }
-    public void setAhk830(BigDecimal ahk830) { this.ahk830 = ahk830; }
+    public void setAhk830(BigDecimal v) { this.ahk830 = v; }
     public BigDecimal getAhk840() { return ahk840; }
-    public void setAhk840(BigDecimal ahk840) { this.ahk840 = ahk840; }
+    public void setAhk840(BigDecimal v) { this.ahk840 = v; }
     public BigDecimal getAhk845() { return ahk845; }
-    public void setAhk845(BigDecimal ahk845) { this.ahk845 = ahk845; }
+    public void setAhk845(BigDecimal v) { this.ahk845 = v; }
     public BigDecimal getAhk850() { return ahk850; }
-    public void setAhk850(BigDecimal ahk850) { this.ahk850 = ahk850; }
+    public void setAhk850(BigDecimal v) { this.ahk850 = v; }
     public String getAhk855() { return ahk855; }
-    public void setAhk855(String ahk855) { this.ahk855 = ahk855; }
+    public void setAhk855(String v) { this.ahk855 = v; }
     public String getAhk860() { return ahk860; }
-    public void setAhk860(String ahk860) { this.ahk860 = ahk860; }
+    public void setAhk860(String v) { this.ahk860 = v; }
     public String getAhk870() { return ahk870; }
-    public void setAhk870(String ahk870) { this.ahk870 = ahk870; }
+    public void setAhk870(String v) { this.ahk870 = v; }
     public String getAhk880() { return ahk880; }
-    public void setAhk880(String ahk880) { this.ahk880 = ahk880; }
+    public void setAhk880(String v) { this.ahk880 = v; }
     public BigDecimal getAhk890() { return ahk890; }
-    public void setAhk890(BigDecimal ahk890) { this.ahk890 = ahk890; }
+    public void setAhk890(BigDecimal v) { this.ahk890 = v; }
     public String getAhk900() { return ahk900; }
-    public void setAhk900(String ahk900) { this.ahk900 = ahk900; }
+    public void setAhk900(String v) { this.ahk900 = v; }
     public String getAhk901() { return ahk901; }
-    public void setAhk901(String ahk901) { this.ahk901 = ahk901; }
+    public void setAhk901(String v) { this.ahk901 = v; }
     public String getAhk910() { return ahk910; }
-    public void setAhk910(String ahk910) { this.ahk910 = ahk910; }
+    public void setAhk910(String v) { this.ahk910 = v; }
     public BigDecimal getAhk920() { return ahk920; }
-    public void setAhk920(BigDecimal ahk920) { this.ahk920 = ahk920; }
+    public void setAhk920(BigDecimal v) { this.ahk920 = v; }
     public String getAhk930() { return ahk930; }
-    public void setAhk930(String ahk930) { this.ahk930 = ahk930; }
+    public void setAhk930(String v) { this.ahk930 = v; }
     public String getAhk940() { return ahk940; }
-    public void setAhk940(String ahk940) { this.ahk940 = ahk940; }
+    public void setAhk940(String v) { this.ahk940 = v; }
     public String getAhk950() { return ahk950; }
-    public void setAhk950(String ahk950) { this.ahk950 = ahk950; }
+    public void setAhk950(String v) { this.ahk950 = v; }
     public String getAhk960() { return ahk960; }
-    public void setAhk960(String ahk960) { this.ahk960 = ahk960; }
+    public void setAhk960(String v) { this.ahk960 = v; }
     public String getAhk970() { return ahk970; }
-    public void setAhk970(String ahk970) { this.ahk970 = ahk970; }
+    public void setAhk970(String v) { this.ahk970 = v; }
     public String getAhk980() { return ahk980; }
-    public void setAhk980(String ahk980) { this.ahk980 = ahk980; }
+    public void setAhk980(String v) { this.ahk980 = v; }
     public String getAhk990() { return ahk990; }
-    public void setAhk990(String ahk990) { this.ahk990 = ahk990; }
+    public void setAhk990(String v) { this.ahk990 = v; }
     public String getAhk1000() { return ahk1000; }
-    public void setAhk1000(String ahk1000) { this.ahk1000 = ahk1000; }
+    public void setAhk1000(String v) { this.ahk1000 = v; }
     public String getAhk1010() { return ahk1010; }
-    public void setAhk1010(String ahk1010) { this.ahk1010 = ahk1010; }
+    public void setAhk1010(String v) { this.ahk1010 = v; }
     public String getAhk1020() { return ahk1020; }
-    public void setAhk1020(String ahk1020) { this.ahk1020 = ahk1020; }
+    public void setAhk1020(String v) { this.ahk1020 = v; }
     public String getAhk1030() { return ahk1030; }
-    public void setAhk1030(String ahk1030) { this.ahk1030 = ahk1030; }
+    public void setAhk1030(String v) { this.ahk1030 = v; }
     public String getAhk1040() { return ahk1040; }
-    public void setAhk1040(String ahk1040) { this.ahk1040 = ahk1040; }
+    public void setAhk1040(String v) { this.ahk1040 = v; }
     public String getAhk1050() { return ahk1050; }
-    public void setAhk1050(String ahk1050) { this.ahk1050 = ahk1050; }
+    public void setAhk1050(String v) { this.ahk1050 = v; }
     public String getAhk1060() { return ahk1060; }
-    public void setAhk1060(String ahk1060) { this.ahk1060 = ahk1060; }
+    public void setAhk1060(String v) { this.ahk1060 = v; }
     public String getAhk1070() { return ahk1070; }
-    public void setAhk1070(String ahk1070) { this.ahk1070 = ahk1070; }
+    public void setAhk1070(String v) { this.ahk1070 = v; }
     public String getAhk1080() { return ahk1080; }
-    public void setAhk1080(String ahk1080) { this.ahk1080 = ahk1080; }
+    public void setAhk1080(String v) { this.ahk1080 = v; }
     public String getAhk1100() { return ahk1100; }
-    public void setAhk1100(String ahk1100) { this.ahk1100 = ahk1100; }
+    public void setAhk1100(String v) { this.ahk1100 = v; }
     public String getAhk1110() { return ahk1110; }
-    public void setAhk1110(String ahk1110) { this.ahk1110 = ahk1110; }
+    public void setAhk1110(String v) { this.ahk1110 = v; }
 }

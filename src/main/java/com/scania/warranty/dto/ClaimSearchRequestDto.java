@@ -6,20 +6,31 @@
 
 package com.scania.warranty.dto;
 
-import com.scania.warranty.domain.SortDirection;
-
 public record ClaimSearchRequestDto(
-    String companyCode,
+    String kzl,
+    String branch,
+    String comp,
+    String vBranch,
+    String date,
+    int days,
+    String filter,
+    String filterArt,
     String status,
-    String statusCompareSign,
-    String filterBranch,
-    String filterCustomer,
-    String filterSdeClaimNr,
-    String filterType,
-    int filterAgeDays,
-    boolean filterOpenOnly,
-    boolean filterMinimumOnly,
-    String searchString,
-    SortDirection sortDirection,
-    boolean sortByClaimNr
-) {} // @rpg-trace: n436
+    String filpkz,
+    String splitt,
+    String art,
+    String neuwt,
+    String neu4,
+    String fgnr,
+    String fgnr17,
+    String claimNr,
+    String datauf,
+    String lista,
+    String listb,
+    String anzdru,
+    String parm5,
+    String sortField,
+    String sortDirection,
+    int pageSize,
+    int pageNumber
+) {} // @rpg-trace: n404
